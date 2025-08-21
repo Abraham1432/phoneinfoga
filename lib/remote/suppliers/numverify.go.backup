@@ -41,7 +41,7 @@ type NumverifySupplier struct {
 
 func NewNumverifySupplier() *NumverifySupplier {
 	return &NumverifySupplier{
-		Uri: "http://apilayer.net/api",
+		Uri: "https://api.apilayer.com",
 	}
 }
 
@@ -64,11 +64,12 @@ func (r *NumverifyRequest) ValidateNumber(internationalNumber string) (res *Numv
 		WithField("number", internationalNumber).
 		Debug("Running validate operation through Numverify API")
 
-	url := fmt.Sprintf("%s/validate?access_key=%s&number=%s&format=1", r.uri, r.apiKey, internationalNumber)
+	url := fmt.Sprintf("%s/number_verification/validate?number=%s", r.uri, internationalNumber)
 
 	// Build the request
 	client := &http.Client{}
 	req, _ := http.NewRequest("GET", url, nil)
+	req.Header.Set("Apikey", r.apiKey)
 
 	response, err := client.Do(req)
 
