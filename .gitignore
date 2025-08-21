@@ -21,3 +21,4 @@ coverage
 coverage.*
 unit-tests.xml
 .idea
+.env
